@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
@@ -12,16 +12,28 @@ import './tabs.scss';
 
 const defaultStateObject = {
   roundTrip: {
-    date1: new Date(),
-    date2: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
+    travelDetails: [
+      {
+        date1: new Date(),
+        date2: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000)
+      }
+    ],
     adults: 1
   },
   oneWay: {
-    date1: new Date(),
+    travelDetails: [
+      {
+        date1: new Date()
+      }
+    ],
     adults: 1
   },
   multiCity: {
-    date1: new Date(),
+    travelDetails: [
+      {
+        date1: new Date()
+      }
+    ],
     adults: 1
   }
 };
