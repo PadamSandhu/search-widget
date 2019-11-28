@@ -23,7 +23,7 @@ import get from 'lodash/get';
 
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 
-const passangerArray = [
+const passengerArray = [
   { type: 'adults', maxNoAllowed: 9, label: 'Adults (16+)' },
   { type: 'youth', maxNoAllowed: 9, label: 'Youth (12-15)' },
   { type: 'child', maxNoAllowed: 9, label: 'Child (2-11)' },
@@ -101,25 +101,27 @@ export const Trips = ({
           </MuiPickersUtilsProvider>
         </FormControl>
 
-        <FormControl>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-              margin="normal"
-              id="date-picker-dialog"
-              label="Arrival Date"
-              format="MM/dd/yyyy"
-              value={get(initialState, `${type}.date2`, new Date())}
-              onChange={event => onChangeHandler(event, 'date2')}
-              KeyboardButtonProps={{
-                'aria-label': 'change date'
-              }}
-            />
-          </MuiPickersUtilsProvider>
-        </FormControl>
+        {type === 'roundTrip' ? (
+          <FormControl>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                margin="normal"
+                id="date-picker-dialog"
+                label="Arrival Date"
+                format="MM/dd/yyyy"
+                value={get(initialState, `${type}.date2`, new Date())}
+                onChange={event => onChangeHandler(event, 'date2')}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date'
+                }}
+              />
+            </MuiPickersUtilsProvider>
+          </FormControl>
+        ) : null}
 
         <FormControl>
           <Button onClick={() => setPersonCountOpen(true)}>
-            Open select dialog
+            Select Passengers
           </Button>
           <Dialog
             disableBackdropClick
@@ -129,7 +131,7 @@ export const Trips = ({
           >
             <DialogTitle>Select No Of Travelers</DialogTitle>
             <DialogContent>
-              {passangerArray.map((item, index) => (
+              {passengerArray.map((item, index) => (
                 <FormControl key={`form-control-${item.type}`}>
                   <InputLabel htmlFor={`input-for-${item.type}`}>
                     {item.label}

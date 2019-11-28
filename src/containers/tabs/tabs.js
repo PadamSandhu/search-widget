@@ -10,10 +10,26 @@ import { TabContent } from './tabContent';
 import RoundTrip from '../../components/trips';
 import './tabs.scss';
 
+const defaultStateObject = {
+  roundTrip: {
+    date1: new Date(),
+    date2: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
+    adults: 1
+  },
+  oneWay: {
+    date1: new Date(),
+    adults: 1
+  },
+  multiCity: {
+    date1: new Date(),
+    adults: 1
+  }
+};
+
 export const FlightTabs = () => {
   const [value, setValue] = React.useState(0);
   const [personCountOpen, setPersonCountOpen] = React.useState(false);
-  const [formState, setFormState] = React.useState({});
+  const [formState, setFormState] = React.useState({ ...defaultStateObject });
 
   const tabContentArray = [
     {
@@ -30,22 +46,8 @@ export const FlightTabs = () => {
     }
   ];
 
-  useEffect(() => {
-    // Set intial State
-    const object = {};
-    const currentDate = new Date();
-    object[tabContentArray[0].type] = {};
-    object[tabContentArray[0].type].date1 = currentDate;
-    object[tabContentArray[0].type].date2 = new Date(
-      currentDate.getTime() + 5 * 24 * 60 * 60 * 1000
-    );
-    setFormState({ ...object });
-  }, []);
-
   const tabHandleChange = (event, newValue) => {
     setValue(newValue);
-    // Reset Form
-    setFormState({});
   };
 
   const formHandler = incomingObj => {
