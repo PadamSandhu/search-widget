@@ -8,7 +8,11 @@ import Tabs from './tabs';
 export const Container = () => {
   return (
     <MContainer maxWidth="xl">
-      <Paper>
+      <Paper
+        style={{
+          paddingBottom: '30px'
+        }}
+      >
         <Typography variant="h5" component="h3">
           Flights
         </Typography>

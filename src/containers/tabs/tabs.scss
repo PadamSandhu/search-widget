@@ -1,5 +1,11 @@
 .tabs-container {
+  margin: 20px;
+
   &__tabs {
     max-width: 500px;
+  }
+
+  &__tabs-content {
+    margin-top: 30px;
   }
 }

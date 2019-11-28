@@ -72,15 +72,17 @@ export const FlightTabs = () => {
           <Tab icon={<AirportShuttleIcon />} label="Multi-city" />
         </Tabs>
       </div>
-      <TabContent>
-        <RoundTrip
-          type={tabContentArray[value].type}
-          handleChange={formHandler}
-          initialState={formState}
-          personCountOpen={personCountOpen}
-          setPersonCountOpen={setPersonCountOpen}
-        />
-      </TabContent>
+      <div className="tabs-container__tabs-content">
+        <TabContent>
+          <RoundTrip
+            type={tabContentArray[value].type}
+            handleChange={formHandler}
+            initialState={formState}
+            personCountOpen={personCountOpen}
+            setPersonCountOpen={setPersonCountOpen}
+          />
+        </TabContent>
+      </div>
     </div>
   );
 };
