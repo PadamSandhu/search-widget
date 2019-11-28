@@ -3,7 +3,14 @@ import {
   FormControl,
   InputLabel,
   InputAdornment,
-  Input
+  Input,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Select,
+  DialogActions,
+  MenuItem
 } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -15,11 +22,26 @@ import {
 import get from 'lodash/get';
 
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-export const Trips = ({ type, handleChange, initialState }) => {
-  const onChangeHandler = (event, idType) => {
+
+const passangerArray = [
+  { type: 'adults', maxNoAllowed: 9, label: 'Adults (16+)' },
+  { type: 'youth', maxNoAllowed: 9, label: 'Youth (12-15)' },
+  { type: 'child', maxNoAllowed: 9, label: 'Child (2-11)' },
+  { type: 'infantLap', maxNoAllowed: 9, label: 'Infant (On Lap)' },
+  { type: 'infantSeat', maxNoAllowed: 9, label: 'Infant (In Seat)' }
+];
+
+export const Trips = ({
+  type,
+  handleChange,
+  initialState,
+  personCountOpen,
+  setPersonCountOpen
+}) => {
+  const onChangeHandler = (event, idType = 'null') => {
     const outGoingObj = {};
     outGoingObj[type] = {};
-
+    console.log('event', event);
     outGoingObj[type][idType] = idType.includes('date')
       ? event
       : event.target.value;
@@ -96,6 +118,51 @@ export const Trips = ({ type, handleChange, initialState }) => {
         </FormControl>
 
         <FormControl>
+          <Button onClick={() => setPersonCountOpen(true)}>
+            Open select dialog
+          </Button>
+          <Dialog
+            disableBackdropClick
+            disableEscapeKeyDown
+            open={personCountOpen}
+            onClose={() => setPersonCountOpen(false)}
+          >
+            <DialogTitle>Select No Of Travelers</DialogTitle>
+            <DialogContent>
+              {passangerArray.map((item, index) => (
+                <FormControl key={`form-control-${item.type}`}>
+                  <InputLabel htmlFor={`input-for-${item.type}`}>
+                    {item.label}
+                  </InputLabel>
+                  <Select
+                    native
+                    value={get(initialState, `${type}.${item.type}`, 0)}
+                    onChange={event => onChangeHandler(event, item.type)}
+                    input={<Input id="passanger-adults" />}
+                  >
+                    {[...Array(item.maxNoAllowed + 1).keys()].map((data, id) =>
+                      id === 0 && index === 0 ? null : (
+                        <option key={`${item.type}-${data}`} value={data}>
+                          {data}
+                        </option>
+                      )
+                    )}
+                  </Select>
+                </FormControl>
+              ))}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setPersonCountOpen(false)} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={() => setPersonCountOpen(false)} color="primary">
+                Ok
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </FormControl>
+
+        <FormControl>
           <InputLabel htmlFor="input-with-icon-promo-code">
             Prove any promitional code
           </InputLabel>
@@ -111,7 +178,6 @@ export const Trips = ({ type, handleChange, initialState }) => {
             }
           />
         </FormControl>
-
       </form>
     </div>
   );

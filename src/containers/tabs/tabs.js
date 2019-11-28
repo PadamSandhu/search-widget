@@ -12,6 +12,7 @@ import './tabs.scss';
 
 export const FlightTabs = () => {
   const [value, setValue] = React.useState(0);
+  const [personCountOpen, setPersonCountOpen] = React.useState(false);
   const [formState, setFormState] = React.useState({});
 
   const tabContentArray = [
@@ -35,7 +36,9 @@ export const FlightTabs = () => {
     const currentDate = new Date();
     object[tabContentArray[0].type] = {};
     object[tabContentArray[0].type].date1 = currentDate;
-    object[tabContentArray[0].type].date2 = new Date(currentDate.getTime() + 5 * 24 * 60 * 60 * 1000);
+    object[tabContentArray[0].type].date2 = new Date(
+      currentDate.getTime() + 5 * 24 * 60 * 60 * 1000
+    );
     setFormState({ ...object });
   }, []);
 
@@ -53,24 +56,27 @@ export const FlightTabs = () => {
 
   return (
     <div className="tabs-container">
-      <Tabs
-        value={value}
-        onChange={tabHandleChange}
-        variant="fullWidth"
-        indicatorColor="secondary"
-        textColor="secondary"
-        aria-label="Select the type of trip"
-      >
-        <Tab icon={<AllInclusiveIcon />} label="Round-trip" />
-        <Tab icon={<LastPageIcon />} label="One-way" />
-        <Tab icon={<AirportShuttleIcon />} label="Multi-city" />
-      </Tabs>
-
+      <div className="tabs-container__tabs">
+        <Tabs
+          value={value}
+          onChange={tabHandleChange}
+          variant="fullWidth"
+          indicatorColor="secondary"
+          textColor="secondary"
+          aria-label="Select the type of trip"
+        >
+          <Tab icon={<AllInclusiveIcon />} label="Round-trip" />
+          <Tab icon={<LastPageIcon />} label="One-way" />
+          <Tab icon={<AirportShuttleIcon />} label="Multi-city" />
+        </Tabs>
+      </div>
       <TabContent>
         <RoundTrip
           type={tabContentArray[value].type}
           handleChange={formHandler}
           initialState={formState}
+          personCountOpen={personCountOpen}
+          setPersonCountOpen={setPersonCountOpen}
         />
       </TabContent>
     </div>
