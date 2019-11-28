@@ -40,6 +40,7 @@ const passengerArray = [
 export const Trips = ({
   type,
   handleChange,
+  submitHandler,
   initialState,
   personCountOpen,
   setPersonCountOpen
@@ -130,7 +131,7 @@ export const Trips = ({
               </Grid>
 
               <Grid item xs={12} sm={4}>
-                <div style={{display:"flex"}}>
+                <div style={{ display: 'flex' }}>
                   <FormControl style={{ width: '70%', display: 'flex' }}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
@@ -152,7 +153,7 @@ export const Trips = ({
                   {type === 'multiCity' && (
                     <div
                       style={{
-                        justifyContent: "flex-end",
+                        justifyContent: 'flex-end',
                         marginTop: '20px',
                         marginLeft: '10px'
                       }}
@@ -313,6 +314,7 @@ export const Trips = ({
               }}
               color="secondary"
               variant="extended"
+              onClick={() => submitHandler(type)}
             >
               <NavigationIcon />
               Find

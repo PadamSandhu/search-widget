@@ -64,9 +64,14 @@ export const FlightTabs = () => {
 
   const formHandler = incomingObj => {
     setFormState(defaultsDeep(incomingObj, formState));
-    console.log('incomingObj', incomingObj);
   };
-  console.log('state', formState);
+
+  const submitHandler = tabType => {
+    
+    const outGoingObject = formState[tabType];
+    console.log('OutGoingObject', outGoingObject);
+    // alert("Post this object to back-end, check console");
+  };
 
   return (
     <div className="tabs-container">
@@ -92,6 +97,7 @@ export const FlightTabs = () => {
             initialState={formState}
             personCountOpen={personCountOpen}
             setPersonCountOpen={setPersonCountOpen}
+            submitHandler={submitHandler}
           />
         </TabContent>
       </div>
